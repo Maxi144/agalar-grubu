@@ -54,26 +54,25 @@ body{background-color:#0b0f19;min-height:100vh;display:flex;flex-direction:colum
 </div>
 </div>
 <script>
-window.onload = function() { varsayilanSunuculariKur(); tabloyuDoldur(); var aktifRol = localStorage.getItem('aktif_oturum'); if (aktifRol) { paneliKapat(aktifRol); } }
-function varsayilanSunuculariKur() {
-if(!localStorage.getItem('sunucular_kuruldu')) {
-var varsayilanSunucular = [
-{id: 1, isim: "Agalar Survival", sahip: "Kavax", ozellik: "64 GB RAM, Ryzen 9", adres: "://agalar.com", surum: "1.20.4", mod: "Hayır (Vanilla)"},
-{id: 2, isim: "Agalar Modlu Teknik", sahip: "ZıpırAdmin", ozellik: "32 GB RAM, NVMe SSD", adres: "://agalar.com", surum: "1.12.2", mod: "Evet (140 Mod)"}
-];
-localStorage.setItem('sunucu_verileri', JSON.stringify(varsayilanSunucular));
-localStorage.setItem('sunucular_kuruldu', 'true');
-}
-}
+var FIREBASE_URL = "https://firebasedatabase.app"; 
+
+window.onload = function() { tabloyuDoldur(); var aktifRol = localStorage.getItem('aktif_oturum'); if (aktifRol) { paneliKapat(aktifRol); } }
+
 function tabloyuDoldur() {
-var tbody = document.getElementById('sunucu-tablo-body'); tbody.innerHTML = "";
-var srvListesi = JSON.parse(localStorage.getItem('sunucu_verileri') || "[]");
-srvListesi.forEach(function(s) {
-var tr = document.createElement('tr');
-tr.innerHTML = '<td>'+s.isim+'</td><td>'+s.sahip+'</td><td>'+s.ozellik+'</td><td>'+s.adres+'</td><td>'+s.surum+'</td><td>'+s.mod+'</td>';
-tbody.appendChild(tr);
-});
+    var tbody = document.getElementById('sunucu-tablo-body'); tbody.innerHTML = "";
+    fetch(FIREBASE_URL + "sunucular.json").then(res => res.json()).then(data => {
+        if(!data) {
+            tbody.innerHTML = '<tr><td>Agalar Survival</td><td>Kavax</td><td>64 GB RAM</td><td>://agalar.com</td><td>1.20.4</td><td>Hayır</td></tr>';
+            return;
+        }
+        Object.keys(data).forEach(key => {
+            var s = data[key]; var tr = document.createElement('tr');
+            tr.innerHTML = '<td>'+s.isim+'</td><td>'+s.sahip+'</td><td>'+s.ozellik+'</td><td>'+s.adres+'</td><td>'+s.surum+'</td><td>'+s.mod+'</td>';
+            tbody.appendChild(tr);
+        });
+    });
 }
+
 function paneliKapat(rol) {
 document.getElementById('ana-icerik').style.filter = "none"; document.getElementById('ana-icerik').style.pointerEvents = "auto"; document.getElementById('ana-icerik').style.userSelect = "auto";
 document.getElementById('giris-paneli').style.display = "none"; document.getElementById('durum-butonu').innerText = "Oturum Açık";
@@ -85,12 +84,18 @@ var adminButon = document.createElement('a'); adminButon.href = "admin.html"; ad
 }
 }
 }
+
 function sistemeGirisYap() {
-var kadi = document.getElementById('kullanici-adi').value; var pas = document.getElementById('sifre').value;
-var adminUye  = (kadi === "admin" && pas === "admin123"); var kayitliSifre = localStorage.getItem('user_' + kadi);
-if (adminUye || (kayitliSifre !== null && kayitliSifre === pas) || (!localStorage.getItem('silindi_agaurye') && kadi === "agaurye" && pas === "uye123")) {
-var rol = (adminUye || kadi === "admin") ? 'admin' : 'uye'; localStorage.setItem('aktif_oturum', rol); paneliKapat(rol);
-} else { alert("Hatalı Giriş!"); }
+    var kadi = document.getElementById('kullanici-adi').value.trim(); 
+    var pas = document.getElementById('sifre').value.trim();
+    if(kadi === "admin" && pas === "admin123") { localStorage.setItem('aktif_oturum', 'admin'); paneliKapat('admin'); return; }
+
+    fetch(FIREBASE_URL + "kullanicilar/" + kadi + ".json").then(res => res.json()).then(user => {
+        if(user && user.sifre === pas) {
+            localStorage.setItem('aktif_oturum', user.rutbe || 'uye');
+            paneliKapat(user.rutbe || 'uye');
+        } else { alert("Hatalı Kullanıcı Adı veya Şifre!"); }
+    });
 }
 </script>
 </body>
