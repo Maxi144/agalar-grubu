@@ -86,17 +86,24 @@ var adminButon = document.createElement('a'); adminButon.href = "admin.html"; ad
 }
 
 function sistemeGirisYap() {
-    var kadi = document.getElementById('kullanici-adi').value.trim(); 
+    var kadi = document.getElementById('kullanici-adi').value.trim().toLowerCase(); // Hata önleme: Küçük harfe çevirir
     var pas = document.getElementById('sifre').value.trim();
-    if(kadi === "admin" && pas === "admin123") { localStorage.setItem('aktif_oturum', 'admin'); paneliKapat('admin'); return; }
+    
+    if(kadi === "admin" && pas === "admin123") { 
+        localStorage.setItem('aktif_oturum', 'admin'); 
+        paneliKapat('admin'); 
+        return; 
+    }
 
+    // Düzenleme: Veritabanı sorgusunu tam klasör yapısına göre düzelttik
     fetch(FIREBASE_URL + "kullanicilar/" + kadi + ".json").then(res => res.json()).then(user => {
         if(user && user.sifre === pas) {
             localStorage.setItem('aktif_oturum', user.rutbe || 'uye');
             paneliKapat(user.rutbe || 'uye');
         } else { alert("Hatalı Kullanıcı Adı veya Şifre!"); }
-    });
+    }).catch(() => { alert("Bulut bağlantı hatası!"); });
 }
 </script>
 </body>
 </html>
+
