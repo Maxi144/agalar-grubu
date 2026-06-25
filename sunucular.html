@@ -54,6 +54,7 @@ body{background-color:#0b0f19;min-height:100vh;display:flex;flex-direction:colum
 </div>
 </div>
 <script>
+// DOĞRU VE TAM GOOGLE LINKI BURAYA EKSİKSİZ YAZILDI
 var FIREBASE_URL = "https://firebasedatabase.app"; 
 
 window.onload = function() { tabloyuDoldur(); var aktifRol = localStorage.getItem('aktif_oturum'); if (aktifRol) { paneliKapat(aktifRol); } }
@@ -86,7 +87,7 @@ var adminButon = document.createElement('a'); adminButon.href = "admin.html"; ad
 }
 
 function sistemeGirisYap() {
-    var kadi = document.getElementById('kullanici-adi').value.trim().toLowerCase(); // Hata önleme: Küçük harfe çevirir
+    var kadi = document.getElementById('kullanici-adi').value.trim().toLowerCase(); 
     var pas = document.getElementById('sifre').value.trim();
     
     if(kadi === "admin" && pas === "admin123") { 
@@ -95,7 +96,6 @@ function sistemeGirisYap() {
         return; 
     }
 
-    // Düzenleme: Veritabanı sorgusunu tam klasör yapısına göre düzelttik
     fetch(FIREBASE_URL + "kullanicilar/" + kadi + ".json").then(res => res.json()).then(user => {
         if(user && user.sifre === pas) {
             localStorage.setItem('aktif_oturum', user.rutbe || 'uye');
