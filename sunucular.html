@@ -26,14 +26,18 @@ body{background-color:#0b0f19;min-height:100vh;display:flex;flex-direction:colum
 .girdi-kutusu{width:100%;height:44px;background-color:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:0 16px;color:#ffffff;font-size:14px;margin-bottom:16px;outline:none;}
 .panel-buton{width:100%;height:44px;background-color:#ffffff;color:#000000;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;}
 .kayit-link-alani{color:#9ca3af;font-size:13px;margin-top:16px;}
-.kayit-link-alani a{color:#3b82f6;text-decoration:none;font-weight:600;}
+.kayit-link-alani a{color:#3b82f6;text-decoration:none;}
 </style>
 </head>
 <body>
 <header class="kavax-header">
 <div class="kavax-container">
 <div class="logo-alani">AGALAR</div>
-<nav class="menu-linkleri" id="nav-menu"><a href="index.html">Ana Sayfa</a><a href="chat.html">Chat</a></nav>
+<nav class="menu-linkleri" id="nav-menu">
+<!-- LINK BURADA GUENCELENDI: Kendi ana sayfa URL'ni tam olarak verdik -->
+<a href="https://github.io">Ana Sayfa</a>
+<a href="chat.html">Chat</a>
+</nav>
 <a href="#" class="giris-butonu" id="durum-butonu">Kilitli</a>
 </div>
 </header>
@@ -50,7 +54,7 @@ body{background-color:#0b0f19;min-height:100vh;display:flex;flex-direction:colum
 <p class="panel-alt-yazi">Sunucu detaylarını görmek için onaylanmış hesabınla oturum açmalısın.</p>
 <input type="text" id="kullanici-adi" class="girdi-kutusu" placeholder="Kullanıcı Adı"><input type="password" id="sifre" class="girdi-kutusu" placeholder="Şifre">
 <button class="panel-buton" onclick="sistemeGirisYap()">Oturum Aç</button>
-<div class="kayit-link-alani">Hesabın yok mu? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdTjQ_S4TtEaTvACEAmg6Rsnw8jtZAiuFCD4SlFdhc4iAR39Q/viewform" target="_blank">Başvuru Yap</a></div>
+<div class="kayit-link-alani">Hesabın yok mu? <a href="https://google.com" target="_blank">Başvuru Yap</a></div>
 </div>
 </div>
 <script>
