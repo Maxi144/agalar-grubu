@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGALAR | Yönetim Paneli</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;}
+body{background-color:#0b0f19;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
+.kavax-header{position:fixed;top:0;left:0;width:100%;height:80px;z-index:50;border-bottom:1px solid rgba(255,255,255,0.05);background-color:rgba(0,0,0,0.5);backdrop-filter:blur(12px);}
+.kavax-container{max-width:1280px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between;}
+.logo-alani{font-size:24px;font-weight:bold;letter-spacing:0.05em;color:#ffffff;}
+.menu-linkleri{display:flex;align-items:center;gap:32px;}
+.menu-linkleri a{font-size:14px;font-weight:500;color:#9ca3af;text-decoration:none;}
+.admin-etiket{background-color:#9333ea;color:#ffffff;padding:6px 14px;border-radius:6px;font-weight:700;box-shadow:0 0 15px rgba(147, 51, 234, 0.4);}
+.giris-butonu{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:6px;background-color:#ef4444;color:#ffffff;font-size:14px;font-weight:500;text-decoration:none;cursor:pointer;}
+.panel-grid{margin-top:100px;padding:24px;max-width:1280px;width:100%;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:1fr 2fr;gap:24px;}
+.kart{background-color:#111827;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:24px;margin-bottom:24px;}
+.kart-baslik{color:#ffffff;font-size:18px;font-weight:700;margin-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:10px;}
+.girdi-kutusu{width:100%;height:44px;background-color:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:0 16px;color:#ffffff;font-size:14px;margin-bottom:12px;outline:none;}
+.panel-buton{width:100%;height:44px;background-color:#9333ea;color:#ffffff;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;}
+.liste-tablosu{width:100%;border-collapse:collapse;}
+.liste-tablosu th{color:#ffffff;text-align:left;padding:12px;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.liste-tablosu td{padding:12px;color:#9ca3af;font-size:14px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.rutbe-secim{background-color:#0b0f19;color:#ffffff;border:1px solid rgba(255,255,255,0.1);padding:6px 10px;border-radius:4px;outline:none;font-size:13px;}
+.sil-butonu{background-color:rgba(239,68,68,0.1);color:#ef4444;border:1px solid rgba(239,68,68,0.2);padding:6px 12px;border-radius:6px;cursor:pointer;font-weight:600;font-size:12px;}
+.sil-butonu:hover{background-color:#ef4444;color:#ffffff;}
+</style>
+</head>
+<body>
+<header class="kavax-header">
+<div class="kavax-container">
+<div class="logo-alani">AGALAR</div>
+<nav class="menu-linkleri">
+<a href="index.html">Ana Sayfa</a>
+<a href="sunucular.html">Sunucular</a>
+<a href="chat.html">Chat</a>
+<span class="admin-etiket">Yönetim Paneli</span>
+</nav>
+<div class="giris-butonu" onclick="cikisYap()">Çıkış Yap</div>
+</div>
+</header>
+<div class="panel-grid">
+<div>
+<div class="kart">
+<h2 class="kart-baslik">Yeni Üye Ekle</h2>
+<input type="text" id="yeni-kadi" class="girdi-kutusu" placeholder="Kullanıcı Adı">
+<input type="password" id="yeni-sifre" class="girdi-kutusu" placeholder="Şifre">
+<button class="panel-buton" onclick="uyeKaydet()">Kaydet</button>
+</div>
+<div class="kart">
+<h2 class="kart-baslik">Yeni Sunucu Ekle</h2>
+<input type="text" id="srv-isim" class="girdi-kutusu" placeholder="Sunucu İsmi">
+<input type="text" id="srv-sahip" class="girdi-kutusu" placeholder="Sahibi">
+<input type="text" id="srv-ozellik" class="girdi-kutusu" placeholder="Özellikler (RAM vs.)">
+<input type="text" id="srv-adres" class="girdi-kutusu" placeholder="Adresi / IP">
+<input type="text" id="srv-surum" class="girdi-kutusu" placeholder="Sürümü">
+<input type="text" id="srv-mod" class="girdi-kutusu" placeholder="Modlu mu? (Evet/Hayır)">
+<button class="panel-buton" onclick="sunucuKaydet()">Sunucuyu Ekle</button>
+</div>
+</div>
+<div>
+<div class="kart">
+<h2 class="kart-baslik">Etkin Olan Kullanıcılar</h2>
+<table class="liste-tablosu">
+<thead><tr><th>Kullanıcı Adı</th><th>Mevcut Şifre</th><th>Kullanıcı Rütbesi</th><th>İşlem</th></tr></thead>
+<tbody id="kullanici-listesi"></tbody>
+</table>
+</div>
+<div class="kart">
+<h2 class="kart-baslik">Mevcut Sunucular</h2>
+<table class="liste-tablosu">
+<thead><tr><th>Sunucu Adı</th><th>IP Adresi</th><th>Sürüm</th><th>İşlem</th></tr></thead>
+<tbody id="sunucu-listesi"></tbody>
+</table>
+</div>
+</div>
+</div>
+<script>
+window.onload = function() { varsayilanlariKur(); listeyiYenile(); sunucuListesiniYenile(); }
+function varsayilanlariKur() {
+if(!localStorage.getItem('sunucular_kuruldu')) {
+var varsayilanSunucular = [
+{id: 1, isim: "Agalar Survival", sahip: "Kavax", ozellik: "64 GB RAM, Ryzen 9", adres: "://agalar.com", surum: "1.20.4", mod: "Hayır (Vanilla)"},
+{id: 2, isim: "Agalar Modlu Teknik", sahip: "ZıpırAdmin", ozellik: "32 GB RAM, NVMe SSD", adres: "://agalar.com", surum: "1.12.2", mod: "Evet (140 Mod)"}
+];
+localStorage.setItem('sunucu_verileri', JSON.stringify(varsayilanSunucular));
+localStorage.setItem('sunucular_kuruldu', 'true');
+}
+}
+function listeyiYenile() {
+var tbody = document.getElementById('kullanici-listesi'); tbody.innerHTML = "";
+var hesaplar = [{ kadi: "admin", sifre: "admin123", varsayilanRutbe: "admin", silinebilir: false }];
+if (!localStorage.getItem('silindi_agaurye')) {
+hesaplar.push({ kadi: "agaurye", sifre: "uye123", varsayilanRutbe: "uye", silinebilir: true });
+}
+for (var i = 0; i < localStorage.length; i++) {
+var anahtar = localStorage.key(i);
+if (anahtar.indexOf('user_') === 0) {
+var kadi = anahtar.replace('user_', '');
+if (kadi !== "agaurye") hesaplar.push({ kadi: kadi, sifre: localStorage.getItem(anahtar), varsayilanRutbe: "uye", silinebilir: true });
+}
+}
+hesaplar.forEach(function(h) {
+var r = localStorage.getItem('role_' + h.kadi) || h.varsayilanRutbe;
+var btn = h.silinebilir ? '<td><button class="sil-butonu" onclick="uyeSil(\'' + h.kadi + '\')">Hesabı Kaldır</button></td>' : '<td><span style="color:#4b5563; font-size:12px;">Sistem Hesabı</span></td>';
+var tr = document.createElement('tr');
+tr.innerHTML = '<td>'+h.kadi+'</td><td>'+h.sifre+'</td><td><select class="rutbe-secim" onchange="rutbeDegistir(\''+h.kadi+'\', this.value)"><option value="uye"'+(r==='uye'?' selected':'')+'>Üye</option><option value="sahip"'+(r==='sahip'?' selected':'')+'>Sunucu Sahibi</option><option value="admin"'+(r==='admin'?' selected':'')+'>Yönetici</option></select></td>'+btn;
+tbody.appendChild(tr);
+});
+}
+function sunucuListesiniYenile() {
+var tbody = document.getElementById('sunucu-listesi'); tbody.innerHTML = "";
+var srvListesi = JSON.parse(localStorage.getItem('sunucu_verileri') || "[]");
+srvListesi.forEach(function(s) {
+var tr = document.createElement('tr');
+tr.innerHTML = '<td>'+s.isim+'</td><td>'+s.adres+'</td><td>'+s.surum+'</td><td><button class="sil-butonu" onclick="sunucuSil('+s.id+')">Sunucuyu Kaldır</button></td>';
+tbody.appendChild(tr);
+});
+}
+function uyeKaydet(){
+var u = document.getElementById('yeni-kadi').value.trim(); var p = document.getElementById('yeni-sifre').value.trim();
+if(!u || !p) { alert('Alanları doldurun!'); return; }
+if(u === "agaurye") localStorage.removeItem('silindi_agaurye');
+localStorage.setItem('user_' + u, p); localStorage.setItem('role_' + u, 'uye');
+alert(u + ' eklendi.'); document.getElementById('yeni-kadi').value = ''; document.getElementById('yeni-sifre').value = ''; listeyiYenile();
+}
+function uyeSil(kadi) {
+if(confirm(kadi + ' silinsin mi?')) {
+if(kadi === "agaurye") localStorage.setItem('silindi_agaurye', 'true');
+localStorage.removeItem('user_' + kadi); localStorage.removeItem('role_' + kadi); listeyiYenile();
+}
+}
+function rutbeDegistir(kadi, yeniRutbe) { localStorage.setItem('role_' + kadi, yeniRutbe); alert('Rütbe güncellendi.'); }
+function sunucuKaydet() {
+var isim = document.getElementById('srv-isim').value.trim(); var sahip = document.getElementById('srv-sahip').value.trim();
+var ozellik = document.getElementById('srv-ozellik').value.trim(); var adres = document.getElementById('srv-adres').value.trim();
+var surum = document.getElementById('srv-surum').value.trim(); var mod = document.getElementById('srv-mod').value.trim();
+if(!isim || !adres) { alert('İsim ve Adres alanları zorunludur!'); return; }
+var srvListesi = JSON.parse(localStorage.getItem('sunucu_verileri') || "[]");
+var yeniSrv = { id: Date.now(), isim: isim, sahip: sahip, ozellik: ozellik, adres: adres, surum: surum, mod: mod };
+srvListesi.push(yeniSrv); localStorage.setItem('sunucu_verileri', JSON.stringify(srvListesi));
+alert('Sunucu başarıyla eklendi.');
+document.getElementById('srv-isim').value = ''; document.getElementById('srv-sahip').value = ''; document.getElementById('srv-ozellik').value = '';
+document.getElementById('srv-adres').value = ''; document.getElementById('srv-surum').value = ''; document.getElementById('srv-mod').value = '';
+sunucuListesiniYenile();
+}
+function sunucuSil(id) {
+if(confirm('Bu sunucuyu kaldırmak istediğinize emin misiniz?')) {
+var srvListesi = JSON.parse(localStorage.getItem('sunucu_verileri') || "[]");
+var yeniListesi = srvListesi.filter(function(s) { return s.id !== id; });
+localStorage.setItem('sunucu_verileri', JSON.stringify(yeniListesi));
+sunucuListesiniYenile();
+}
+}
+function cikisYap() { localStorage.removeItem('aktif_oturum'); window.location.href = "index.html"; }
+</script>
+</body>
+</html>

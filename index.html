@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGALAR | Oyun Grubu</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;}
+body{background-color:#0b0f19;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;}
+.kavax-header{position:fixed;top:0;left:0;width:100%;height:80px;z-index:50;border-bottom:1px solid rgba(255,255,255,0.05);background-color:rgba(0,0,0,0.5);backdrop-filter:blur(12px);}
+.kavax-container{max-width:1280px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between;}
+.logo-alani{font-size:24px;font-weight:bold;letter-spacing:0.05em;color:#ffffff;}
+.menu-linkleri{display:flex;align-items:center;gap:32px;}
+.menu-linkleri a{font-size:14px;font-weight:500;color:#9ca3af;text-decoration:none;transition:color 0.2s;}
+.menu-linkleri a:hover{color:#ffffff;}
+.admin-link-butonu{background-color:#9333ea !important;color:#ffffff !important;padding:6px 14px;border-radius:6px;font-weight:700 !important;box-shadow:0 0 15px rgba(147, 51, 234, 0.4);}
+.giris-butonu{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:6px;background-color:#ffffff;color:#000000;font-size:14px;font-weight:500;text-decoration:none;}
+.giris-sayfasi{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 24px 60px 24px;position:relative;}
+.arkaplan-parlama{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:80vw;height:80vh;background:radial-gradient(circle,rgba(147,51,234,0.22) 0%,rgba(59,130,246,0.08) 45%,rgba(0,0,0,0) 70%);z-index:1;pointer-events:none;filter:blur(50px);}
+.icerik-kutusu{max-width:800px;text-align:center;z-index:2;}
+.ana-baslik{font-size:64px;font-weight:800;color:#ffffff;letter-spacing:-0.02em;margin-bottom:24px;}
+.aciklama-metni{font-size:18px;color:#9ca3af;line-height:1.6;margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto;}
+.buton-grubu{display:flex;gap:16px;justify-content:center;}
+.buton-ana{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 32px;border-radius:8px;background-color:#ffffff;color:#000000;font-size:15px;font-weight:600;text-decoration:none;}
+.buton-ikincil{display:inline-flex;align-items:center;justify-content:center;height:48px;padding:0 32px;border-radius:8px;background-colorblock:rgba(255,255,255,0.03);color:#ffffff;font-size:15px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,0.1);}
+</style>
+</head>
+<body>
+<header class="kavax-header">
+<div class="kavax-container">
+<div class="logo-alani">AGALAR</div>
+<nav class="menu-linkleri" id="nav-menu">
+<a href="sunucular.html">Sunucular</a>
+<a href="chat.html">Chat</a>
+</nav>
+<a href="sunucular.html" class="giris-butonu" id="durum-butonu">Oturum Aç</a>
+</div>
+</header>
+<main class="giris-sayfasi">
+<div class="arkaplan-parlama"></div>
+<div class="icerik-kutusu">
+<h1 class="ana-baslik">Oyuna Adımını At</h1>
+<p class="aciklama-metni">Birlikten kuvvet doğar. Çevrimiçi olarak toplumun uyanışına adım at. Oyuna Katıl.</p>
+<div class="buton-grubu">
+<a href="sunucular.html" class="buton-ana">Çevrimiçi Ol</a>
+<a href="sunucular.html" class="buton-ikincil">Sunucu Adresleri</a>
+</div>
+</div>
+</main>
+<script>
+window.onload = function() {
+    var aktifRol = localStorage.getItem('aktif_oturum');
+    if (aktifRol) {
+        document.getElementById('durum-butonu').innerText = "Oturum Açık";
+        document.getElementById('durum-butonu').style.backgroundColor = "#22c55e";
+        document.getElementById('durum-butonu').style.color = "#ffffff";
+        if (aktifRol === 'admin') {
+            var menu = document.getElementById('nav-menu');
+            var adminButon = document.createElement('a');
+            adminButon.href = "admin.html";
+            adminButon.innerText = "Admin Paneli";
+            adminButon.className = "admin-link-butonu";
+            menu.appendChild(adminButon);
+        }
+    }
+}
+</script>
+</body>
+</html>

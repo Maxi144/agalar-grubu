@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGALAR | İletişim Grupları</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif;}
+body{background-color:#0b0f19;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;position:relative;}
+.kavax-header{position:fixed;top:0;left:0;width:100%;height:80px;z-index:50;border-bottom:1px solid rgba(255,255,255,0.05);background-color:rgba(0,0,0,0.5);backdrop-filter:blur(12px);}
+.kavax-container{max-width:1280px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center;justify-content:space-between;}
+.logo-alani{font-size:24px;font-weight:bold;letter-spacing:0.05em;color:#ffffff;}
+.menu-linkleri{display:flex;align-items:center;gap:32px;}
+.menu-linkleri a{font-size:14px;font-weight:500;color:#9ca3af;text-decoration:none;}
+.admin-link-butonu{background-color:#9333ea !important;color:#ffffff !important;padding:6px 14px;border-radius:6px;font-weight:700 !important;box-shadow:0 0 15px rgba(147, 51, 234, 0.4);}
+.giris-butonu{display:inline-flex;align-items:center;justify-content:center;height:40px;padding:0 24px;border-radius:6px;background-color:#ffffff;color:#000000;font-size:14px;font-weight:500;text-decoration:none;}
+.icerik-alani{margin-top:80px;padding:60px 24px;flex:1;display:flex;flex-direction:column;align-items:center;filter:blur(15px);pointer-events:none;user-select:none;}
+.sayfa-basligi{color:#ffffff;font-size:48px;font-weight:800;margin-bottom:12px;text-align:center;}
+.sayfa-aciklamasi{color:#9ca3af;font-size:16px;margin-bottom:48px;text-align:center;max-width:600px;line-height:1.6;}
+.grup-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;width:100%;max-width:1000px;}
+.grup-kart{background-color:#111827;border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:32px;text-align:center;transition:transform 0.2s,border-color 0.2s;}
+.grup-kart:hover{transform:translateY(-4px);border-color:rgba(255,255,255,0.1);}
+.grup-isim{color:#ffffff;font-size:22px;font-weight:700;margin-bottom:8px;}
+.grup-detay{color:#6b7280;font-size:14px;margin-bottom:24px;}
+.katil-buton{display:inline-flex;align-items:center;justify-content:center;width:100%;height:44px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity 0.2s;cursor:pointer;border:none;}
+.katil-buton:hover{opacity:0.9;}
+.discord-btn{background-color:#5865F2;color:#ffffff;}
+.whatsapp-btn{background-color:#25D366;color:#ffffff;}
+.telegram-btn{background-color:#0088cc;color:#ffffff;}
+.oturum-katmani{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:100;}
+.oturum-paneli{background-color:#111827;border:1px solid rgba(255,255,255,0.08);width:100%;max-width:400px;padding:40px;border-radius:12px;text-align:center;}
+.panel-baslik{color:#ffffff;font-size:24px;font-weight:700;margin-bottom:8px;}
+.panel-alt-yazi{color:#6b7280;font-size:14px;margin-bottom:24px;}
+.girdi-kutusu{width:100%;height:44px;background-color:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:6px;padding:0 16px;color:#ffffff;font-size:14px;margin-bottom:16px;outline:none;}
+.panel-buton{width:100%;height:44px;background-color:#ffffff;color:#000000;border:none;border-radius:6px;font-size:14px;font-weight:600;cursor:pointer;}
+.kayit-link-alani{color:#9ca3af;font-size:13px;margin-top:16px;}
+.kayit-link-alani a{color:#3b82f6;text-decoration:none;font-weight:600;}
+</style>
+</head>
+<body>
+<header class="kavax-header">
+<div class="kavax-container">
+<div class="logo-alani">AGALAR</div>
+<nav class="menu-linkleri" id="nav-menu"><a href="index.html">Ana Sayfa</a><a href="sunucular.html">Sunucular</a></nav>
+<a href="#" class="giris-butonu" id="durum-butonu">Kilitli</a>
+</div>
+</header>
+<main class="icerik-alani" id="ana-icerik">
+<h1 class="sayfa-basligi">Grup Başlıkları</h1>
+<p class="sayfa-aciklamasi">Gruplardan iletişime geçmek için butona bas ve aramıza katıl.</p>
+<div class="grup-grid">
+<div class="grup-kart"><div class="grup-isim">Discord Sunucusu</div><div class="grup-detay">Sesli odalar, turnuvalar ve sohbet ortamı.</div><button onclick="mevcutDegil()" class="katil-buton discord-btn">Discord'a Katıl</button></div>
+<div class="grup-kart"><div class="grup-isim">WhatsApp Grubu</div><div class="grup-detay">Anlık duyurular ve günlük muhabbet alanı.</div><a href="https://whatsapp.com" target="_blank" class="katil-buton whatsapp-btn">WhatsApp'a Katıl</a></div>
+<div class="grup-kart"><div class="grup-isim">Telegram Grubu</div><div class="grup-detay">Yedek iletişim kanalı ve dosya paylaşımı.</div><button onclick="mevcutDegil()" class="katil-buton telegram-btn">Telegram'a Katıl</button></div>
+</div>
+</main>
+<div class="oturum-katmani" id="grid-paneli">
+<div class="oturum-paneli">
+<h2 class="panel-baslik">Erişim Engellendi</h2>
+<p class="panel-alt-yazi">Grup bağlantılarını görmek için onaylanmış hesabınla oturum açmalısın.</p>
+<input type="text" id="kullanici-adi" class="girdi-kutusu" placeholder="Kullanıcı Adı"><input type="password" id="sifre" class="girdi-kutusu" placeholder="Şifre">
+<button class="panel-buton" onclick="sistemeGirisYap()">Oturum Aç</button>
+<div class="kayit-link-alani">Hesabın yok mu? <a href="https://docs.google.com/forms/d/e/1FAIpQLSdTjQ_S4TtEaTvACEAmg6Rsnw8jtZAiuFCD4SlFdhc4iAR39Q/viewform" target="_blank">Başvuru Yap</a></div>
+</div>
+</div>
+<script>
+window.onload = function() { var aktifRol = localStorage.getItem('aktif_oturum'); if (aktifRol) { paneliKapat(aktifRol); } }
+function mevcutDegil() { alert("Henüz bu grup mevcut değil :("); }
+function paneliKapat(rol) {
+document.getElementById('ana-icerik').style.filter = "none"; document.getElementById('ana-icerik').style.pointerEvents = "auto"; document.getElementById('ana-icerik').style.userSelect = "auto";
+document.getElementById('grid-paneli').style.display = "none"; document.getElementById('durum-butonu').innerText = "Oturum Açık";
+document.getElementById('durum-butonu').style.backgroundColor = "#22c55e"; document.getElementById('durum-butonu').style.color = "#ffffff";
+if (rol === 'admin') {
+var menu = document.getElementById('nav-menu');
+if(!document.querySelector('.admin-link-butonu')){
+var adminButon = document.createElement('a'); adminButon.href = "admin.html"; adminButon.innerText = "Admin Paneli"; adminButon.className = "admin-link-butonu"; menu.appendChild(adminButon);
+}
+}
+}
+function sistemeGirisYap() {
+var kadi = document.getElementById('kullanici-adi').value; var pas = document.getElementById('sifre').value;
+var adminUye  = (kadi === "admin" && pas === "admin123"); var kayitliSifre = localStorage.getItem('user_' + kadi);
+if (adminUye || (kayitliSifre !== null && kayitliSifre === pas) || (!localStorage.getItem('silindi_agaurye') && kadi === "agaurye" && pas === "uye123")) {
+var rol = (adminUye || kadi === "admin") ? 'admin' : 'uye'; localStorage.setItem('aktif_oturum', rol); paneliKapat(rol);
+} else { alert("Hatalı Giriş!"); }
+}
+</script>
+</body>
+</html>
