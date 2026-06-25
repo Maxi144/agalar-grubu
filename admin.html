@@ -101,11 +101,16 @@ function sunucuListesiniYenile() {
 }
 
 function uyeKaydet(){
-    var u = document.getElementById('yeni-kadi').value.trim(); var p = document.getElementById('yeni-sifre').value.trim();
+    var u = document.getElementById('yeni-kadi').value.trim().toLowerCase(); // Hata önleme: Küçük harfe çevirir
+    var p = document.getElementById('yeni-sifre').value.trim();
     if(!u || !p) { alert('Alanları doldurun!'); return; }
+    
+    // Düzenleme: Veriyi Firebase'in tam istediği JSON formatında paketledik
     fetch(FIREBASE_URL + "kullanicilar/" + u + ".json", {
-        method: "PUT", body: JSON.stringify({ sifre: p, rutbe: "uye" })
-    }).then(() => { alert(u + " buluta yazıldı!"); listeyiYenile(); });
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sifre: p, rutbe: "uye" })
+    }).then(() => { alert(u + " başarıyla eklendi!"); document.getElementById('yeni-kadi').value=''; document.getElementById('yeni-sifre').value=''; listeyiYenile(); });
 }
 
 function uyeSil(kadi) {
@@ -115,7 +120,11 @@ function uyeSil(kadi) {
 }
 
 function rutbeDegistir(kadi, yeniRutbe) {
-    fetch(FIREBASE_URL + "kullanicilar/" + kadi + "/rutbe.json", { method: "PUT", body: JSON.stringify(yeniRutbe) });
+    fetch(FIREBASE_URL + "kullanicilar/" + kadi + "/rutbe.json", { 
+        method: "PUT", 
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(yeniRutbe) 
+    });
 }
 
 function sunucuKaydet() {
@@ -124,8 +133,10 @@ function sunucuKaydet() {
     var surum = document.getElementById('srv-surum').value.trim(); var mod = document.getElementById('srv-mod').value.trim();
     var id = Date.now();
     fetch(FIREBASE_URL + "sunucular/" + id + ".json", {
-        method: "PUT", body: JSON.stringify({ isim: isim, sahip: sahip, ozellik: ozellik, adres: adres, surum: surum, mod: mod })
-    }).then(() => { alert("Sunucu buluta eklendi!"); sunucuListesiniYenile(); });
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ isim: isim, sahip: sahip, ozellik: ozellik, adres: adres, surum: surum, mod: mod })
+    }).then(() => { alert("Sunucu eklendi!"); sunucuListesiniYenile(); });
 }
 
 function sunucuSil(id) {
